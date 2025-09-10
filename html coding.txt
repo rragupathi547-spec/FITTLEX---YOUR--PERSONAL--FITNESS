@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fittlex — Your Personal Fitness</title>
+  <meta name="description" content="Fittlex is your personal fitness companion: workouts, goals, BMI calculator, interval timer, and progress tracker — all in one clean page." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0b1020;
+      --card: #121935;
+      --accent: #7cf5c5;
+      --accent-2: #8ab6ff;
+      --text: #e6ecff;
+      --muted: #9bb0d3;
+      --danger: #ff7b7b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 20% -10%, #1a2454 0%, transparent 65%),
+                  radial-gradient(1000px 500px at 100% 0%, #153046 0%, transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1150px; margin-inline:auto; padding:24px}
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(10px);
+      background: linear-gradient( to bottom, rgba(11,16,32,.9), rgba(11,16,32,.65));
+      border-bottom: 1px solid rgba(124,245,197,.15);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px}
+    .logo{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.5px}
+    .logo-badge{width:32px; height:32px; border-radius:10px; background:linear-gradient(135deg, var(--accent), var(--accent-2)); display:grid; place-items:center; color:#072014; font-weight:900}
+    .navlinks{display:flex; gap:18px; flex-wrap:wrap}
+    .navlinks a{opacity:.85}
+    .navlinks a:hover{opacity:1}
+    .btn{display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#071018; padding:10px 16px; border-radius:999px; font-weight:700; border:none; cursor:pointer; box-shadow: var(--shadow)}
+    .btn.ghost{background:transparent; color:var(--text); border:1px solid rgba(138,182,255,.3); box-shadow:none}
+
+    /* Hero */
+    .hero{padding:72px 0 36px}
+    .hero-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:28px}
+    .title{font-size:clamp(32px, 5vw, 56px); line-height:1.05; margin:8px 0}
+    .subtitle{color:var(--muted); font-size:clamp(14px, 2vw, 18px)}
+    .hero-card{background:linear-gradient(180deg, rgba(138,182,255,.12), rgba(18,25,53,.7)); border:1px solid rgba(138,182,255,.25); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .metrics{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px}
+    .metric{background:rgba(18,25,53,.7); border:1px solid rgba(124,245,197,.2); border-radius:12px; padding:14px}
+    .metric b{font-size:22px}
+    .tag{display:inline-block; padding:6px 10px; border-radius:999px; background:rgba(124,245,197,.15); color:var(--accent)}
+
+    /* Sections */
+    section{padding:42px 0}
+    .grid{display:grid; gap:18px}
+    .three{grid-template-columns:repeat(3,1fr)}
+    .two{grid-template-columns:repeat(2,1fr)}
+    .card{background:var(--card); border:1px solid rgba(138,182,255,.18); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    h2{margin:0 0 12px; font-size:28px}
+    h3{margin:0 0 8px; font-size:18px}
+    p{margin:6px 0}
+
+    /* Planner */
+    .plan-tag{font-size:12px; color:var(--muted)}
+    .chip{display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; border:1px solid rgba(124,245,197,.3)}
+    .row{display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+
+    /* Tools */
+    .tool{display:grid; gap:12px}
+    .tool input, .tool select, .tool textarea{
+      width:100%; padding:10px 12px; border-radius:12px; border:1px solid rgba(138,182,255,.3); background:#0e1530; color:var(--text)
+    }
+    .tool label{font-size:13px; color:var(--muted)}
+    .muted{color:var(--muted)}
+
+    /* Footer */
+    footer{padding:36px 0 60px; color:#9fb5e8}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns:1fr}
+      .three{grid-template-columns:1fr}
+      .two{grid-template-columns:1fr}
+      .navlinks{display:none}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-badge">Fx</div>
+        <span>Fittlex</span>
+      </div>
+      <nav class="navlinks" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#planner">Planner</a>
+        <a href="#tools">Tools</a>
+        <a href="#progress">Progress</a>
+        <a href="#contact">Join</a>
+      </nav>
+      <a class="btn" href="#contact">Start Free</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="tag">Your personal fitness companion</span>
+          <h1 class="title">Fittlex helps you plan, track & crush your goals.</h1>
+          <p class="subtitle">Custom workouts, smart tools (BMI, intervals, calorie estimate), and a lightweight progress tracker that lives in your browser.</p>
+          <div class="row" style="margin-top:16px">
+            <a class="btn" href="#planner">Build a plan</a>
+            <a class="btn ghost" href="#tools">Try tools</a>
+          </div>
+          <div class="metrics">
+            <div class="metric"><b id="streak">0</b><br><span class="muted">Day streak</span></div>
+            <div class="metric"><b id="sessions">0</b><br><span class="muted">Sessions logged</span></div>
+            <div class="metric"><b id="minutes">0</b><br><span class="muted">Minutes trained</span></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3 style="margin:0 0 12px">Today’s Focus</h3>
+          <div class="row" style="margin-bottom:12px">
+            <span class="chip">🏋️ Strength</span>
+            <span class="chip">🧘 Mobility</span>
+            <span class="chip">🚴 Cardio</span>
+          </div>
+          <ul id="todo" class="muted" style="padding-left:18px; margin-top:0">
+            <li>5 min warm‑up</li>
+            <li>3 × 10 squats</li>
+            <li>10 min zone‑2 cardio</li>
+            <li>5 min stretch</li>
+          </ul>
+          <button class="btn" id="logSession" style="margin-top:12px">Log Session</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <div class="container grid three">
+        <div class="card">
+          <h3>Plans that fit you</h3>
+          <p class="muted">Choose beginner to advanced templates or create your own with sets, reps, and rest.</p>
+        </div>
+        <div class="card">
+          <h3>Track what matters</h3>
+          <p class="muted">Save streaks, sessions, minutes, and notes locally — no sign‑in required.</p>
+        </div>
+        <div class="card">
+          <h3>Smart tools</h3>
+          <p class="muted">Built‑in BMI calculator, interval timer, and calorie estimate help guide your training.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Planner -->
+    <section id="planner">
+      <div class="container">
+        <h2>Workout Planner</h2>
+        <p class="muted">Pick a goal and auto‑build a quick session. Edit any field, then <b>Add to Plan</b>.</p>
+        <div class="grid two">
+          <div class="card">
+            <div class="row">
+              <label class="chip">
+                Goal
+                <select id="goal">
+                  <option>Strength</option>
+                  <option>Hypertrophy</option>
+                  <option>Fat Loss</option>
+                  <option>Mobility</option>
+                </select>
+              </label>
+              <label class="chip">Sets <input id="sets" type="number" min="1" value="3" style="width:80px"></label>
+              <label class="chip">Reps <input id="reps" type="number" min="1" value="10" style="width:80px"></label>
+              <label class="chip">Rest (s) <input id="rest" type="number" min="10" value="60" style="width:100px"></label>
+            </div>
+            <div class="tool">
+              <label for="exercises">Exercises (comma‑separated)</label>
+              <input id="exercises" placeholder="Squat, Push‑up, Plank">
+              <div class="row">
+                <button class="btn" id="addPlan">Add to Plan</button>
+                <button class="btn ghost" id="clearPlan">Clear</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Your Plan</h3>
+            <ol id="planList" class="muted" style="padding-left:18px"></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section id="tools">
+      <div class="container grid three">
+        <div class="card tool" aria-labelledby="bmi-title">
+          <h3 id="bmi-title">BMI Calculator</h3>
+          <label>Height (cm)<input id="height" type="number" min="50" value="170"></label>
+          <label>Weight (kg)<input id="weight" type="number" min="10" value="70"></label>
+          <button class="btn" id="calcBMI">Calculate</button>
+          <p class="muted">BMI: <b id="bmiVal">—</b> • Category: <b id="bmiCat">—</b></p>
+        </div>
+        <div class="card tool" aria-labelledby="interval-title">
+          <h3 id="interval-title">Interval Timer</h3>
+          <label>Work (s)<input id="work" type="number" min="5" value="20"></label>
+          <label>Rest (s)<input id="resti" type="number" min="5" value="10"></label>
+          <label>Rounds<input id="rounds" type="number" min="1" value="8"></label>
+          <div class="row">
+            <button class="btn" id="startTimer">Start</button>
+            <button class="btn ghost" id="stopTimer">Stop</button>
+          </div>
+          <p class="muted">Round <b id="roundNum">0</b> • Phase: <b id="phase">—</b> • Time: <b id="time">0</b>s</p>
+        </div>
+        <div class="card tool" aria-labelledby="calorie-title">
+          <h3 id="calorie-title">Calories (very rough)</h3>
+          <label>Duration (min)<input id="dur" type="number" min="5" value="30"></label>
+          <label>Intensity<select id="intensity"><option value="6">Light</option><option value="8">Moderate</option><option value="10">Vigorous</option></select></label>
+          <button class="btn" id="calcCal">Estimate</button>
+          <p class="muted">Estimated burn: <b id="calories">—</b> kcal</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progress -->
+    <section id="progress">
+      <div class="container grid two">
+        <div class="card tool">
+          <h3>Daily Habits</h3>
+          <label><input type="checkbox" class="habit"> Protein with meals</label>
+          <label><input type="checkbox" class="habit"> 8,000+ steps</label>
+          <label><input type="checkbox" class="habit"> 7–9h sleep</label>
+          <label><input type="checkbox" class="habit"> Mobility 5 min</label>
+          <button class="btn" id="saveHabits">Save today</button>
+        </div>
+        <div class="card tool">
+          <h3>Notes</h3>
+          <textarea id="notes" rows="6" placeholder="How did today’s workout feel?"></textarea>
+          <div class="row">
+            <button class="btn" id="saveNotes">Save Notes</button>
+            <button class="btn ghost" id="clearNotes">Clear</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Join / Contact -->
+    <section id="contact">
+      <div class="container grid two">
+        <div class="card">
+          <h2>Join Fittlex</h2>
+          <p class="muted">Get weekly tips and a beginner‑to‑pro progression guide.</p>
+          <div class="tool">
+            <label>Name<input id="name" placeholder="Jordan"></label>
+            <label>Email<input id="email" type="email" placeholder="you@example.com"></label>
+            <button class="btn" id="signup">Subscribe</button>
+            <p id="signupMsg" class="muted" role="status"></p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Why Fittlex?</h3>
+          <p class="muted">Simple, fast, and private. Your data saves to your device unless you choose to export it.</p>
+          <div class="row">
+            <button class="btn ghost" id="exportData">Export Progress</button>
+            <input id="importFile" type="file" accept="application/json" style="display:none" />
+            <button class="btn ghost" id="importData">Import</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container row" style="justify-content:space-between">
+      <span>© <span id="year"></span> Fittlex</span>
+      <a href="#">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    // ---- Local Storage Keys ----
+    const keys = {
+      sessions: 'fx_sessions',
+      minutes: 'fx_minutes',
+      streak: 'fx_streak',
+      lastLog: 'fx_lastlog',
+      plan: 'fx_plan',
+      habits: 'fx_habits',
+      notes: 'fx_notes',
+    };
+
+    const $ = sel => document.querySelector(sel);
+
+    // ---- Init ----
+    const today = new Date();
+    $('#year').textContent = today.getFullYear();
+    refreshStats();
+    renderPlan();
+    restoreHabits();
+    restoreNotes();
+
+    // ---- Stats & Streaks ----
+    function refreshStats(){
+      const s = parseInt(localStorage.getItem(keys.sessions) || '0');
+      const m = parseInt(localStorage.getItem(keys.minutes) || '0');
+      const st = parseInt(localStorage.getItem(keys.streak) || '0');
+      $('#sessions').textContent = s;
+      $('#minutes').textContent = m;
+      $('#streak').textContent = st;
+    }
+
+    function dayKey(d){ return d.toISOString().slice(0,10); }
+
+    $('#logSession').addEventListener('click', () => {
+      const now = new Date();
+      const last = localStorage.getItem(keys.lastLog);
+      const lastDay = last ? new Date(last) : null;
+      const s = parseInt(localStorage.getItem(keys.sessions) || '0') + 1;
+      const m = parseInt(localStorage.getItem(keys.minutes) || '0') + 30; // assume 30 min block
+      let st = parseInt(localStorage.getItem(keys.streak) || '0');
+
+      if(!lastDay || dayKey(now) === dayKey(lastDay)){
+        st = st || 1; // same day, keep streak
+      } else {
+        const delta = Math.round((now - lastDay) / 86400000);
+        if(delta === 1) st += 1; else st = 1; // break if gap >1 day
+      }
+
+      localStorage.setItem(keys.sessions, s);
+      localStorage.setItem(keys.minutes, m);
+      localStorage.setItem(keys.streak, st);
+      localStorage.setItem(keys.lastLog, now.toISOString());
+      refreshStats();
+    });
+
+    // ---- Planner ----
+    $('#addPlan').addEventListener('click', () => {
+      const data = loadPlan();
+      const goal = $('#goal').value;
+      const sets = parseInt($('#sets').value || '3');
+      const reps = parseInt($('#reps').value || '10');
+      const rest = parseInt($('#rest').value || '60');
+      const ex = ($('#exercises').value || '').split(',').map(x => x.trim()).filter(Boolean);
+      if(ex.length === 0){ alert('Add at least one exercise'); return; }
+      ex.forEach(e => data.push({goal, e, sets, reps, rest}));
+      localStorage.setItem(keys.plan, JSON.stringify(data));
+      $('#exercises').value = '';
+      renderPlan();
+    });
+
+    $('#clearPlan').addEventListener('click', () => {
+      if(confirm('Clear your plan?')){
+        localStorage.removeItem(keys.plan);
+        renderPlan();
+      }
+    });
+
+    function loadPlan(){
+      try { return JSON.parse(localStorage.getItem(keys.plan) || '[]'); } catch { return []; }
+    }
+
+    function renderPlan(){
+      const list = $('#planList');
+      list.innerHTML = '';
+      const data = loadPlan();
+      data.forEach((item, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<b>${item.e}</b> — <span class="plan-tag">${item.goal}</span> · ${item.sets} × ${item.reps}, rest ${item.rest}s <button data-i="${i}" class="btn ghost" style="margin-left:8px; padding:4px 8px">Remove</button>`;
+        list.appendChild(li);
+      });
+      list.addEventListener('click', (e) => {
+        const idx = e.target?.dataset?.i;
+        if(idx !== undefined){
+          const arr = loadPlan();
+          arr.splice(parseInt(idx),1);
+          localStorage.setItem(keys.plan, JSON.stringify(arr));
+          renderPlan();
+        }
+      }, { once: true });
+    }
+
+    // ---- BMI ----
+    $('#calcBMI').addEventListener('click', () => {
+      const h = parseFloat($('#height').value)/100; // m
+      const w = parseFloat($('#weight').value);
+      if(!h || !w) return;
+      const bmi = (w/(h*h)).toFixed(1);
+      $('#bmiVal').textContent = bmi;
+      let cat = '—';
+      if(bmi < 18.5) cat = 'Underweight';
+      else if(bmi < 25) cat = 'Normal';
+      else if(bmi < 30) cat = 'Overweight';
+      else cat = 'Obese';
+      $('#bmiCat').textContent = cat;
+    });
+
+    // ---- Calories (very rough MET estimate) ----
+    $('#calcCal').addEventListener('click', () => {
+      const min = parseInt($('#dur').value || '0');
+      const intensity = parseFloat($('#intensity').value); // MET proxy
+      const weight = parseFloat($('#weight').value || '70');
+      const kcal = Math.round(intensity * 3.5 * weight / 200 * min); // standard rough formula
+      $('#calories').textContent = kcal;
+    });
+
+    // ---- Interval Timer ----
+    let tId = null, phase = '—', round = 0, remaining = 0;
+    function updateTimerUI(){
+      $('#phase').textContent = phase;
+      $('#roundNum').textContent = round;
+      $('#time').textContent = remaining;
+      document.title = `${phase} ${remaining}s — Fittlex`;
+    }
+    function startPhase(name, secs, next){
+      phase = name; remaining = secs; updateTimerUI();
+      tId = setInterval(() => {
+        remaining--; updateTimerUI();
+        if(remaining <= 0){
+          clearInterval(tId);
+          next();
+        }
+      }, 1000);
+    }
+    $('#startTimer').addEventListener('click', () => {
+      if(tId) clearInterval(tId);
+      round = 1;
+      const total = parseInt($('#rounds').value);
+      const work = parseInt($('#work').value);
+      const rest = parseInt($('#resti').value);
+      const goRest = () => startPhase('Rest', rest, () => {
+        round++;
+        if(round > total){ phase = 'Done'; remaining = 0; updateTimerUI(); return; }
+        startPhase('Work', work, goRest);
+      });
+      startPhase('Work', work, goRest);
+    });
+    $('#stopTimer').addEventListener('click', () => { if(tId) clearInterval(tId); phase='—'; remaining=0; updateTimerUI(); });
+
+    // ---- Habits & Notes ----
+    function restoreHabits(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(keys.habits) || '{}');
+        const todayKey = dayKey(new Date());
+        const vals = saved[todayKey] || [];
+        document.querySelectorAll('.habit').forEach((el, i) => el.checked = !!vals[i]);
+      }catch{}
+    }
+    $('#saveHabits').addEventListener('click', () => {
+      const todayKey = dayKey(new Date());
+      const saved = JSON.parse(localStorage.getItem(keys.habits) || '{}');
+      const vals = Array.from(document.querySelectorAll('.habit')).map(x => x.checked);
+      saved[todayKey] = vals;
+      localStorage.setItem(keys.habits, JSON.stringify(saved));
+      alert('Saved!');
+    });
+
+    function restoreNotes(){ $('#notes').value = localStorage.getItem(keys.notes) || ''; }
+    $('#saveNotes').addEventListener('click', () => { localStorage.setItem(keys.notes, $('#notes').value); });
+    $('#clearNotes').addEventListener('click', () => { $('#notes').value=''; localStorage.removeItem(keys.notes); });
+
+    // ---- Subscribe (demo only) ----
+    $('#signup').addEventListener('click', () => {
+      const n = $('#name').value.trim();
+      const e = $('#email').value.trim();
+      $('#signupMsg').textContent = (n && e) ? `Thanks, ${n}! Check your inbox to confirm.` : 'Enter a valid name and email.';
+    });
+
+    // ---- Import/Export ----
+    $('#exportData').addEventListener('click', () => {
+      const data = {
+        sessions: localStorage.getItem(keys.sessions) || '0',
+        minutes: localStorage.getItem(keys.minutes) || '0',
+        streak: localStorage.getItem(keys.streak) || '0',
+        lastLog: localStorage.getItem(keys.lastLog) || null,
+        plan: localStorage.getItem(keys.plan) || '[]',
+        habits: localStorage.getItem(keys.habits) || '{}',
+        notes: localStorage.getItem(keys.notes) || ''
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'fittlex-progress.json'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    $('#importData').addEventListener('click', () => $('#importFile').click());
+    $('#importFile').addEventListener('change', (ev) => {
+      const file = ev.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const data = JSON.parse(reader.result);
+          Object.entries(data).forEach(([k,v]) => {
+            if(k in keys){ localStorage.setItem(keys[k], v); }
+          });
+          refreshStats(); renderPlan(); restoreHabits(); restoreNotes();
+          alert('Imported!');
+        }catch(e){ alert('Invalid file.'); }
+      };
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>
